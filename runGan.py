@@ -82,7 +82,7 @@ elif( runcase == 1 ): # inference a trained model
         
         # run these test cases one by one:
         for nn in range(len(testpre)):
-            dirstr = 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\output' + testpre[nn].replace("input", "output") + '\\' # the place to save the results
+            dirstr = 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\' + testpre[nn].replace("input", "output") + '\\' # the place to save the results
             if (not os.path.exists(dirstr)): os.mkdir(dirstr)
             cmd1 = ["main.py",
                 "--cudaID", "0",            # set the cudaID here to use only one GPU
