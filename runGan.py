@@ -18,7 +18,7 @@ def preexec(): # Don't forward signals.
     
 def mycall(cmd, block=False):
     if not block:
-        return subprocess.Popen(cmd)
+        return subprocess.Popen(cmd, shell=True)
     else:
         return subprocess.Popen(cmd, preexec_fn = preexec)
     
@@ -65,29 +65,42 @@ if( runcase == 0 ): # download inference data, trained models
     subprocess.call(cmd3, shell=True)
     
 elif( runcase == 1 ): # inference a trained model
-    
-    dirstr = './results/' # the place to save the results
-    testpre = ['calendar'] # the test cases
+    try:
+        i = sys.argv[2]
+    except:
+        i = 0
+    if i >= 1:
+        print(aaaaaaaaaa)
+    else:
+        testpre = []
+        for folder in os.listdir("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\"):
+            if folder.startswith("input"):
+                testpre.append(folder)
+                    #testpre = ['input0'] # the test cases
 
-    if (not os.path.exists(dirstr)): os.mkdir(dirstr)
-    
-    # run these test cases one by one:
-    for nn in range(len(testpre)):
-        cmd1 = ["python3", "main.py",
-            "--cudaID", "0",            # set the cudaID here to use only one GPU
-            "--output_dir",  dirstr,    # Set the place to put the results.
-            "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log. 
-            "--mode","inference", 
-            "--input_dir_LR", os.path.join("./LR/", testpre[nn]),   # the LR directory
-            #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
-            # one of (input_dir_HR,input_dir_LR) should be given
-            "--output_pre", testpre[nn], # the subfolder to save current scene, optional
-            "--num_resblock", "16",  # our model has 16 residual blocks, 
-            # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
-            "--checkpoint", './model/TecoGAN',  # the path of the trained model,
-            "--output_ext", "png"               # png is more accurate, jpg is smaller
-        ]
-        mycall(cmd1).communicate()
+        
+        
+        # run these test cases one by one:
+        myi = 0
+        for nn in range(len(testpre)):
+            dirstr = 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\output' + str(myi) + '\\' # the place to save the results
+            if (not os.path.exists(dirstr)): os.mkdir(dirstr)
+            cmd1 = ["main.py",
+                "--cudaID", "0",            # set the cudaID here to use only one GPU
+                "--output_dir",  dirstr,    # Set the place to put the results.
+                "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log. 
+                "--mode","inference", 
+                "--input_dir_LR", os.path.join("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\", testpre[nn]),   # the LR directory
+                #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
+                # one of (input_dir_HR,input_dir_LR) should be given
+                #"--output_pre", testpre[nn], # the subfolder to save current scene, optional
+                "--num_resblock", "16",  # our model has 16 residual blocks, 
+                # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
+                "--checkpoint", 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\model\\TecoGAN',  # the path of the trained model,
+                "--output_ext", "png"               # png is more accurate, jpg is smaller
+            ]
+            mycall(cmd1).communicate()
+            myi += 1
 
 elif( runcase == 2 ): # calculate all metrics, and save the csv files, should use png
 
