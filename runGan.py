@@ -11,6 +11,10 @@ runcase == ...  coming... data preparation and so on...
 import os, subprocess, sys, datetime, signal, shutil
 
 runcase = int(sys.argv[1])
+something = sys.argv[2]
+i = int(sys.argv[3])
+something2 = sys.argv[4]
+
 print ("Testing test case %d" % runcase)
 
 def preexec(): # Don't forward signals.
@@ -65,10 +69,6 @@ if( runcase == 0 ): # download inference data, trained models
     subprocess.call(cmd3, shell=True)
     
 elif( runcase == 1 ): # inference a trained model
-    try:
-        i = int(sys.argv[3])
-    except:
-        print("exception")
     if i >= 1:
         print(aaaaaaaaaa)
     else:
@@ -99,7 +99,6 @@ elif( runcase == 1 ): # inference a trained model
                 "--output_ext", "png"               # png is more accurate, jpg is smaller
             ]
             mycall(cmd1).communicate()
-            myi += 1
 
 elif( runcase == 2 ): # calculate all metrics, and save the csv files, should use png
 
