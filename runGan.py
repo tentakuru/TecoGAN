@@ -11,7 +11,7 @@ runcase == ...  coming... data preparation and so on...
 import os, subprocess, sys, datetime, signal, shutil
 
 runcase = int(sys.argv[1])
-something = sys.argv[2]
+model = sys.argv[2]
 i = int(sys.argv[3])
 something2 = sys.argv[4]
 
@@ -73,6 +73,10 @@ elif( runcase == 1 ): # inference a trained model
         print(aaaaaaaaaa)
     else:
         testpre = []
+        if model == "s":
+            model = "TecoGAN"
+        elif model == "a":
+            model = "a"
         for folder in os.listdir("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\"):
             if folder.startswith("input"):
                 testpre.append(folder)
@@ -95,7 +99,7 @@ elif( runcase == 1 ): # inference a trained model
                 #"--output_pre", testpre[nn], # the subfolder to save current scene, optional
                 "--num_resblock", "16",  # our model has 16 residual blocks, 
                 # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
-                "--checkpoint", 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\model\\TecoGAN',  # the path of the trained model,
+                "--checkpoint", 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\model\\' + model,  # the path of the trained model,
                 "--output_ext", "png"               # png is more accurate, jpg is smaller
             ]
             mycall(cmd1).communicate()
