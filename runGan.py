@@ -10,11 +10,22 @@ runcase == ...  coming... data preparation and so on...
 '''
 import os, subprocess, sys, datetime, signal, shutil
 from os import system
+import logging
 
 runcase = int(sys.argv[1])
 model = sys.argv[2]
 i = int(sys.argv[3])
 something2 = sys.argv[4]
+
+logging.basicConfig(filename="error.txt",
+                            filemode='a',
+                            format='%(asctime)s,%(msecs)d %(name)s %(levelname)s %(message)s',
+                            datefmt='%H:%M:%S',
+                            level=logging.DEBUG)
+
+logging.info("Running error logging")
+
+logger = logging.getLogger('errorlogging')
 
 print ("Testing test case %d" % runcase)
 
