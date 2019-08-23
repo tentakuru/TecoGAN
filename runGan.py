@@ -16,6 +16,14 @@ runcase = int(sys.argv[1])
 model = sys.argv[2]
 i = int(sys.argv[3])
 something2 = sys.argv[4]
+try:
+    tentakuru = sys.argv[5]
+    if tentakuru == "tentakuru":
+        pass
+    else:
+        tentakuru = None
+except:
+    tentakuru = None
 
 logging.basicConfig(filename="error.txt",
                             filemode='a',
@@ -89,34 +97,70 @@ elif( runcase == 1 ): # inference a trained model
             model = "TecoGAN"
         elif model == "a":
             model = "a"
-        for folder in os.listdir("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\"):
-            if folder.startswith("input"):
-                testpre.append(folder)
-                    #testpre = ['input0'] # the test cases
+            #model = "DefaultTecoGAN"
+        if tentakuru:
+            print("TENTAKURU MODE")
+            for folder in os.listdir("C:\\tentakuruplayer\\TG\\"):
+                if folder.startswith("input"):
+                    testpre.append(folder)
+                        #testpre = ['input0'] # the test cases
 
-        
-        
-        # run these test cases one by one:
-        for nn in range(len(testpre)):
-            system("title tgmain-cuda.exe   "+ str(nn) + "/" + str(len(testpre)) + "   {:.1%}".format((nn)/len(testpre)))
+            
+            
+            # run these test cases one by one:
+            for nn in range(len(testpre)):
+                system("title tgmain-cuda.exe   "+ str(nn) + "/" + str(len(testpre)) + "   {:.1%}".format((nn)/len(testpre)))
 
-            dirstr = 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\' + testpre[nn].replace("input", "output") + '\\' # the place to save the results
-            if (not os.path.exists(dirstr)): os.mkdir(dirstr)
-            cmd1 = ["main.py",
-                "--cudaID", "0",            # set the cudaID here to use only one GPU
-                "--output_dir",  dirstr,    # Set the place to put the results.
-                "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log. 
-                "--mode","inference", 
-                "--input_dir_LR", os.path.join("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\", testpre[nn]),   # the LR directory
-                #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
-                # one of (input_dir_HR,input_dir_LR) should be given
-                #"--output_pre", testpre[nn], # the subfolder to save current scene, optional
-                "--num_resblock", "16",  # our model has 16 residual blocks, 
-                # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
-                "--checkpoint", 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\model\\' + model,  # the path of the trained model,
-                "--output_ext", "png"               # png is more accurate, jpg is smaller
-            ]
-            mycall(cmd1).communicate()
+                dirstr = 'C:\\tentakuruplayer\\TG\\' + testpre[nn].replace("input", "output") + '\\' # the place to save the results
+                if (not os.path.exists(dirstr)): os.mkdir(dirstr)
+                cmd1 = ["main.py",
+                    "--cudaID", "0",            # set the cudaID here to use only one GPU
+                    "--output_dir",  dirstr,    # Set the place to put the results.
+                    "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log. 
+                    "--mode","inference", 
+                    "--input_dir_LR", os.path.join("C:\\tentakuruplayer\\TG\\", testpre[nn]),   # the LR directory
+                    #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
+                    # one of (input_dir_HR,input_dir_LR) should be given
+                    #"--output_pre", testpre[nn], # the subfolder to save current scene, optional
+                    "--num_resblock", "16",  # our model has 16 residual blocks, 
+                    # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
+                    "--checkpoint", 'C:\\tentakuruplayer\\TG\\model\\' + model,  # the path of the trained model,
+                    "--output_ext", "jpg"               # png is more accurate, jpg is smaller
+                ]
+                mycall(cmd1).communicate()
+
+        else:
+            print("NON TENTAKURU MODE")
+            for folder in os.listdir("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\"):
+                if folder.startswith("input"):
+                    testpre.append(folder)
+                        #testpre = ['input0'] # the test cases
+
+            
+            
+            # run these test cases one by one:
+            for nn in range(len(testpre)):
+                system("title tgmain-cuda.exe   "+ str(nn) + "/" + str(len(testpre)) + "   {:.1%}".format((nn)/len(testpre)))
+
+                dirstr = 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\' + testpre[nn].replace("input", "output") + '\\' # the place to save the results
+                if (not os.path.exists(dirstr)): os.mkdir(dirstr)
+                cmd1 = ["main.py",
+                    "--cudaID", "0",            # set the cudaID here to use only one GPU
+                    "--output_dir",  dirstr,    # Set the place to put the results.
+                    "--summary_dir", os.path.join(dirstr, 'log/'), # Set the place to put the log. 
+                    "--mode","inference", 
+                    "--input_dir_LR", os.path.join("F:\\JavPlayer v1.03_win64_Nvidia\\TG\\", testpre[nn]),   # the LR directory
+                    #"--input_dir_HR", os.path.join("./HR/", testpre[nn]),  # the HR directory
+                    # one of (input_dir_HR,input_dir_LR) should be given
+                    #"--output_pre", testpre[nn], # the subfolder to save current scene, optional
+                    "--num_resblock", "16",  # our model has 16 residual blocks, 
+                    # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
+                    "--checkpoint", 'F:\\JavPlayer v1.03_win64_Nvidia\\TG\\model\\' + model,  # the path of the trained model,
+                    "--output_ext", "png"               # png is more accurate, jpg is smaller
+                ]
+                mycall(cmd1).communicate()
+            if something2:
+                input("press enter when done")
 
 elif( runcase == 2 ): # calculate all metrics, and save the csv files, should use png
 
