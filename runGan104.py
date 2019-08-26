@@ -16,7 +16,14 @@ import logging
 runcase = int(sys.argv[1])
 model = sys.argv[2]
 i = int(sys.argv[3])
-something2 = sys.argv[4]
+try:
+    something2 = sys.argv[4]
+    if something2 == "1":
+        pass
+    else:
+        something2 = None
+except:
+    something2 = None
 try:
     tentakuru = sys.argv[5]
     if tentakuru == "tentakuru":
