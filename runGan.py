@@ -125,7 +125,7 @@ elif( runcase == 1 ): # inference a trained model
                     "--num_resblock", "16",  # our model has 16 residual blocks, 
                     # the pre-trained FRVSR and TecoGAN mini have 10 residual blocks
                     "--checkpoint", 'C:\\tentakuruplayer\\TG\\model\\' + model,  # the path of the trained model,
-                    "--output_ext", "jpg"               # png is more accurate, jpg is smaller
+                    "--output_ext", "png"               # png is more accurate, jpg is smaller
                 ]
                 mycall(cmd1).communicate()
 
@@ -159,7 +159,7 @@ elif( runcase == 1 ): # inference a trained model
                     "--output_ext", "png"               # png is more accurate, jpg is smaller
                 ]
                 mycall(cmd1).communicate()
-            if something2:
+            if something2 == "outputtweak":
                 input("press enter when done")
 
 elif( runcase == 2 ): # calculate all metrics, and save the csv files, should use png
